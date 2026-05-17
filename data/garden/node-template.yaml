@@ -1,0 +1,7 @@
+id: "node-id"
+title: "Node Title"
+col: 1
+row: 1
+asset: "plant-filename"
+link: "/posts/slug-or-url"
+linkType: "internal"
