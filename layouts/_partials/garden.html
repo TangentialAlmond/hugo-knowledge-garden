@@ -1,0 +1,156 @@
+{{ $garden := .Params.garden }}
+{{ $gardenData := index site.Data.garden $garden }}
+
+{{ $nodes := slice }}
+{{ $connections := slice }}
+
+<!-- -------------------- -->
+<!-- FLATTEN NODES        -->
+<!-- -------------------- -->
+{{ range $gardenData.nodes }}
+  {{ $nodes = $nodes | append . }}
+{{ end }}
+
+<!-- -------------------- -->
+<!-- CONNECTIONS          -->
+<!-- -------------------- -->
+{{ $connections := slice }}
+
+{{ $main := $gardenData.connections.main }}
+{{ $detour := $gardenData.connections.detour }}
+
+{{ range $main }}
+  {{ $connections = $connections | append (merge . (dict "type" "main")) }}
+{{ end }}
+
+{{ range $detour }}
+  {{ $connections = $connections | append (merge . (dict "type" "detour")) }}
+{{ end }}
+
+<!-- -------------------- -->
+<!-- STYLES + SCRIPTS     -->
+<!-- -------------------- -->
+<link
+  rel="stylesheet"
+  href="{{ (resources.Get "css/garden.css").RelPermalink }}"
+>
+
+<div class="garden-wrapper">
+  <div class="max-w-[var(--garden-width)] mx-auto overflow-hidden rounded-xl border border-base-300 shadow-xl bg-base-100">
+    
+    <div class="flex items-center justify-between px-4 py-3 bg-base-200 border-b border-base-300">
+      <div class="flex gap-1.5">
+        <div class="w-3 h-3 rounded-full bg-error/40"></div>
+        <div class="w-3 h-3 rounded-full bg-warning/40"></div>
+        <div class="w-3 h-3 rounded-full bg-success/40"></div>
+      </div>
+      <span class="text-xs font-mono font-bold uppercase tracking-widest opacity-50">
+        {{ .Title }}
+      </span>
+      <div class="w-12"></div> </div>
+
+    <!-- Nested garden to prevent garden clipping by the mock window -->
+    <div class="relative overflow-x-auto overflow-y-auto bg-[var(--garden-bg)]">
+      
+      <div class="garden {{ if .Page.Draft }}is-draft{{ end }} min-w-[var(--garden-width)] w-[var(--garden-width)]">
+
+        <!-- DRAFT MODE -->
+        <div id="garden-draft-layer" class="pointer-events-none"></div>
+      
+        <!-- SVG PATH LAYER -->
+        <svg
+          class="garden-paths"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          width="100%"
+          height="100%"
+          preserveAspectRatio="none"
+        ></svg>
+
+        <!-- NODE LAYER -->
+      {{ range $nodes }}
+
+        {{ $asset := resources.Get (printf "art/garden/plants/%s.svg" .asset) }}
+
+        <a
+          href="{{ .link }}"
+          class="garden-node {{ .linkType }}"
+          aria-label="{{ .title }}"
+          style="position:absolute;"
+          data-col="{{ .col }}"
+          data-row="{{ .row }}"
+          data-offset-x="{{ default 0 .offsetX }}"
+          data-offset-y="{{ default 0 .offsetY }}"
+          {{ if eq .linkType "external" }}
+            target="_blank"
+            rel="noopener noreferrer"
+          {{ end }}
+        >
+
+          <img
+            src="{{ $asset.RelPermalink }}"
+            alt=""
+            loading="lazy"
+          >
+
+          <span class="garden-label">
+            {{ .title }}
+          </span>
+
+        </a>
+
+      {{ end }}
+
+      <!-- LEGEND -->
+        <div class="garden-legend sticky left-4 bottom-4 top-4 right-4
+          inline-flex flex-col gap-2 p-3 bg-white/80 backdrop-blur-sm
+          rounded-lg border border-base-300 shadow-sm ml-4 mb-4 mt-4">
+          <div class="flex items-center gap-3">
+            <div class="w-6 h-1 rounded-full bg-[var(--soil)]"></div>
+            <span class="text-[10px] font-bold uppercase" style="color: var(--soil)">Main Course</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="w-6 h-1 border-t-2 border-dashed border-[var(--soil-light)]"></div>
+            <span class="text-[10px] font-bold uppercase" style="color: var(--soil-light)">Detour</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- -------------------- -->
+<!-- DATA EXPORT          -->
+<!-- -------------------- -->
+<script>
+  window.gardenNodes = [
+    {{ range $index, $node := $nodes }}
+      {
+        id: "{{ $node.id }}",
+        col: {{ $node.col }},
+        row: {{ $node.row }},
+        offsetX: {{ default 0 $node.offsetX }},
+        offsetY: {{ default 0 $node.offsetY }}
+      }{{ if ne $index (sub (len $nodes) 1) }},{{ end }}
+    {{ end }}
+  ];
+
+  window.gardenConnections = [
+    {{ range $index, $connection := $connections }}
+      {
+        from: "{{ $connection.from }}",
+        to: "{{ $connection.to }}",
+        type: "{{ $connection.type }}"
+      }{{ if ne $index (sub (len $connections) 1) }},{{ end }}
+    {{ end }}
+  ];
+</script>
+
+<!-- -------------------- -->
+<!-- JS ENGINE            -->
+<!-- -------------------- -->
+<script
+  src="{{ (resources.Get "js/garden.js").RelPermalink }}"
+  defer
+></script>
