@@ -21,6 +21,8 @@ Before getting started, ensure you have the following installed on your local ma
 * **Hugo Extended Version** (Required for compiling TailwindCSS v3 and DaisyUI v4 asset pipelines)
 * **Node.js & npm** (Required for running the Jest validation and testing suite)
 
+> **Note:** Packages imported for JS scripts using ESM format.
+
 # 🚀 Quick start
 
 1. **Create Your Repository**<br>
@@ -33,6 +35,15 @@ Clone your newly created repository to your local machine and install the develo
    cd YOUR-REPO-NAME
    npm install
    ```
+
+3. **Set up your Hugo website with TailwindCSS/daisyUI**<br>
+   There are many ways you can set up a Hugo website. I have a barebones example in [this repo](https://github.com/TangentialAlmond/phone-hugo-blog).
+
+   **📚 Learning Resources**<br>
+   If you are new to static site generators, explore these official reference guides to understand how this ecosystem fits together:
+   - [Quick start on setting up a Hugo-based website](https://gohugo.io/getting-started/quick-start/)
+   - [Installation and setup guide for TailwindCSS v3](https://v3.tailwindcss.com/docs/installation/using-postcss)
+   - [Installation and setup guide for daisyUI v4](https://v4.daisyui.com/docs/install/) (Use the ESM method for import of `daisyui`)
 
 # 👩‍🌾 Managing a garden
 This template includes automated scripts to easily create, update and delete your gardens.
