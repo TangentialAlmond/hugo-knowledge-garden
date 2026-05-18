@@ -14,8 +14,8 @@ The system is intentionally:
 - lightweight
 - reusable across multiple domains
 
-Example gardens:
-- ML Garden (machine learning concepts)
+Example garden:
+- [ML Garden](https://tangentialalmond.cc/garden/ml/) (machine learning concepts)
 
 ## 📋 Table-of-contents
 - [🧰 Oranization and architecture](#-oranization-and-architecture)
@@ -24,7 +24,6 @@ Example gardens:
   - [🎨 Design choices](#-design-choices)
   - [🌠 Asset design](#-asset-design)
   - [🧪 Tests](#-tests)
-  - [🚧 Roadmap](#-roadmap)
 - [👩‍🌾 Managing a garden](#-managing-a-garden)
   - [🪴 Creating a garden](#-creating-a-garden)
   - [🪏 Updating a garden](#-updating-a-garden)
@@ -50,9 +49,7 @@ assets/
         └── plants/           <-- node SVGs
 
 content/
-└── garden/                   <-- master directory for learning gardens
-    └── ml/
-        └── index.md          <-- markdown with frontmatter for specific garden
+└── garden/                   <-- master directory for garden pages
 
 docs
 └── GARDEN.md                 <-- Guide for generic garden system
@@ -113,54 +110,28 @@ The connection `.yaml` files are edge lists that use the pixel coordinates of th
 Altogether, authors can create gardens that can scale to the number of nodes and viewers of the garden have an interactive mindmap they can navigate to find resources of interest by simply clicking the nodes.
 
 ## 🌠 Asset design
-Nodes are reprsented as plants to mimic a digital garden. The plants must be in SVG format so that the plant can be scaled easily without loss in resolution. To keep the effort low-cost/free, I plan to use Inkscape to draw the plants and export them as SVG. I intend to draw the plants (and possibly fungi) based on the plants I've seen in Singapore.
+Nodes are reprsented as plants to mimic a digital garden. The plants must be in SVG format so that the plant can be scaled easily without loss in resolution. You can create the SVGs yourself or use free ones like from the [Free SVG repo](https://www.svgrepo.com/).
 
 ## 🧪 Tests
-<span style='color:red'>**PLACEHOLDER FOR TEST OVERVIEW**</span>
+All tests check for data integrity of the garden.
+- `index.test.js` checks the frontmatter of the `content/garden/<name-of-garden>/index.md` to ensure:
+  - there are no missing fields
+  - the `garden` field maps to an existing directory in `data/garden/`
+  - the `layout` is `"single"`
+  - the `draft` field has a boolean input
 
-## 🚧 Roadmap
-- [x] Issue 1: Create one working garden<br>
-  - The garden will focus on my learning journey through machine learning with nodes leading to both internal (blog posts on log loss and the F1-score) and external resources (Google's Introduction to ML and ML Crash Course).
-  - The garden page displays the title "ML Garden", a succinct description and the garden itself with the four nodes and their connections. The nodes will use placeholder SVGs for plants from [Free SVG repo](https://www.svgrepo.com/).
-  - [x] Set up the files for generic gardens including the guide/roadmap (this document)
+- `nodes.test.js` checks all node `.yaml` files to ensure:
+  - the filename must be in kebab-case
+  - the filename must match the `id` field
+  - there are no missing fields
+  - the SVG asset in the `asset` field exists
+  - `linkType` is either `"external"` or `"internal"`
+  - internal `"link"` to an internal resource within the website exists
+  - collision of nodes (by position, referring to the same link, having the same id, etc.)
 
-- [x] Issue 2: Polish up aesthetics of the garden
-  - [x] Add a title to the window to indicate the name of the garden as if the window were a tab in a browser
-  - [x] Make the garden a vertically scrollable window of maxium 5 rows by 5 columns and the width of the window should fit medium to large screens
-  - [x] Add a legend indicating that solid paths are the main course and dotted paths are the detours
-  - [x] Legend should appear over the node
-  - [x] Set up the frontmatter of the `index.md` to trigger 'draft' mode, where the row and col numbers are visible for each tile in the grid
-
-- [x] Issue 3: Set up tests
-  - [x] check the `content/garden/<name-of-garden>/index.md` for
-    - missing fields
-    - `garden` field not mapping to an existing directory in `data/garden/`
-    - `layout` is not `"single"`.
-  - [x] check the node `.yaml` files for:
-    - missing fields
-    - non-existent `asset`
-    - `link` that cannot be found
-    - report any nodes with matching `.yaml` fields (aside from the `linkType`)
-  - [x] check the connection `.yaml` files for:
-    - nodes that do not exist
-    - conflicting connections found in `main.yaml` and `detour.yaml`
-
-- [x] Issue 4: Set up scripts for automating garden management
-  - [x] garden creation
-  - [x] garden deletion
-  - [x] node deletion
-  - [x] de-duplication of edge entries in connections
-
-- [ ] Issue 5: Prepare a template version of the garden system
-  - [ ] Create a `git` branch of the [phone-hugo-blog repo](https://github.com/TangentialAlmond/phone-hugo-blog)
-  - [ ] Draft a guide for setting up the garden closely based on this document
-  - [ ] Follow and edit the guide to set up a template version of the garden system
-  - [ ] Push to GitHub
-
-- [ ] Issue 6: Personalize the ML Garden
-  - [ ] Create 1 tree SVG and 1 non-tree SVG in Inkscape
-  - [ ] Update the 4 nodes in the ML Garden to use the new SVGs and test if nodes have been updated correctly
-  - [ ] Add 'GARDENS' to the menu of the blog linking to `tangentialalmond.cc/gardens` and the index for the page should be cards leading to the gard
+- `connections.test.js` checks the `main.yaml` and `detour.yaml` files to ensure:
+  - nodes referenced exist
+  - conflict in pairs of target and source nodes across `main.yaml` and `detour.yaml` (since a connection cannot be a main course and detour)
 
 # 👩‍🌾 Managing a garden
 ## 🪴 Creating a garden
@@ -223,7 +194,7 @@ Nodes are reprsented as plants to mimic a digital garden. The plants must be in 
    | link | Destination URL<br>**For posts:** `/posts/<slug>`<br>**For external resources:** Full URL |
    | linkType | `internal` (posts) or `external` |
 
-4. Provide the connections under `data/garden/<name-of-garden>/connections` in the `main.yaml` or `detour.yaml`. Connections in the `main,yaml` are nodes that are part of the main course, while connections in the `detour.yaml` are detours a user can take. What counts as a main course or detour is quite ambiguous for now and depends on my opinion. The `main.yaml` and `detour.yaml` are both edge lists which look something like:
+4. Provide the connections under `data/garden/<name-of-garden>/connections` in the `main.yaml` or `detour.yaml`. Connections in the `main,yaml` are nodes that are part of the main course, while connections in the `detour.yaml` are detours a user can take. What counts as a main course or detour depends on your definition. The `main.yaml` and `detour.yaml` are both edge lists which look something like:
    ```yaml
    - from: intro-to-ml     # id of the source node
      to: ml-crash-course   # id of the target node
@@ -235,7 +206,7 @@ Nodes are reprsented as plants to mimic a digital garden. The plants must be in 
    npm run test
    ```
 
-6. Launching the website at this point should show a garden in the landing page similar to the [ML Garden](https://tangentialalmond.cc/garden/ml/).
+1. Launching the website at this point should show a garden in the landing page similar to the [ML Garden](https://tangentialalmond.cc/garden/ml/).
 
 ## 🪏 Updating a garden
 There are a few things you might want to update in the garden:
