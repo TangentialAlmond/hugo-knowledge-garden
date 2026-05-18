@@ -213,7 +213,7 @@ When a garden's `index.md` has `draft: true`, the garden will be rendered in dra
    npm run test
    ```
 
-1. Launching the website at this point should show a garden in the landing page similar to the [ML Garden](https://tangentialalmond.cc/garden/ml/).
+6. Launching the website at this point should show a garden in the landing page similar to the [ML Garden](https://tangentialalmond.cc/garden/ml/).
 
 ## 🪏 Updating a garden
 There are a few things you might want to update in the garden:
