@@ -40,7 +40,6 @@ This template includes automated scripts to easily create, update and delete you
 ## 🪴 Creating a garden
 1. Create the relevant directories and files. The `<name-of-garden>` must be in kebab-case.
    ```bash
-   # In the blog directory
    ./scripts/garden/create-garden.sh <name-of-garden>
    ```
    This automatically creates the folders and files you'll need for your garden.
@@ -74,7 +73,6 @@ This template includes automated scripts to easily create, update and delete you
 
 3. To create each node, copy the `node-template.yaml`. The `<new-node-name>` must be in kebab-case.
    ```bash
-   # In the blog directory
    cp data/garden/node-template.yaml data/garden/<name-of-garden>/nodes/<new-node-name>.yaml
    ```
    The yaml file should look like:
@@ -105,7 +103,6 @@ This template includes automated scripts to easily create, update and delete you
 
 5. Check if the garden has been set up correctly by running tests.
   ```bash
-   # In the blog directory
    npm run test
    ```
 
@@ -121,26 +118,22 @@ There are a few things you might want to update in the garden:
 
 - **Deleting nodes and its connections:**<br>
   ```bash
-  # In the blog directory
   ./scripts/garden/delete-node.sh <name-of-garden> <id-of-node>
   ```
 
 - **Pruning duplicated connections:**<br>
   ```bash
-  # In the blog directory
   ./scripts/garden/deduplicate-connections.sh <name-of-garden>
   ```
 
 Check if the garden has been updated correctly by running tests:
 ```bash
-# In the blog directory
 npm run test
 ```
 
 ## 🧨 Deleting a garden
 To delete a garden, run the following commend:
 ```bash
-# In the blog directory
 ./scripts/garden/create-garden.sh <name-of-garden>
 ```
 The script will check if the garden has any resources to delete and prompt you for a confirmation prior to deleting the garden across `content/garden` and `data/garden`.
