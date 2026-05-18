@@ -40,7 +40,7 @@ Clone your newly created repository to your local machine and install the develo
    There are many ways you can set up a Hugo website. I have a barebones example in [this repo](https://github.com/TangentialAlmond/phone-hugo-blog).
 
    **📚 Learning Resources**<br>
-   If you are new to static site generators, explore these official reference guides to understand how this ecosystem fits together:
+   If you are new to static site generators, explore these official reference guides to get a start on your first static site:
    - [Quick start on setting up a Hugo-based website](https://gohugo.io/getting-started/quick-start/)
    - [Installation and setup guide for TailwindCSS v3](https://v3.tailwindcss.com/docs/installation/using-postcss)
    - [Installation and setup guide for daisyUI v4](https://v4.daisyui.com/docs/install/) (Use the ESM method for import of `daisyui`)
@@ -106,7 +106,7 @@ This template includes automated scripts to easily create, update and delete you
    | link | Destination URL<br>**For posts:** `/posts/<slug>`<br>**For external resources:** Full URL |
    | linkType | `internal` (posts) or `external` |
 
-4. Provide the connections under `data/garden/<name-of-garden>/connections` in the `main.yaml` or `detour.yaml`. Connections in the `main,yaml` are nodes that are part of the main course, while connections in the `detour.yaml` are detours a user can take. What counts as a main course or detour is quite ambiguous for now and depends on my opinion. The `main.yaml` and `detour.yaml` are both edge lists which look something like:
+4. Provide the connections under `data/garden/<name-of-garden>/connections` in the `main.yaml` or `detour.yaml`. Connections in the `main,yaml` are nodes that are part of the main course, while connections in the `detour.yaml` are detours a user can take. What counts as a main course or detour is flexible and depends on your definition. The `main.yaml` and `detour.yaml` are both edge lists which look something like:
    ```yaml
    - from: intro-to-ml     # id of the source node
      to: ml-crash-course   # id of the target node
