@@ -34,7 +34,7 @@ describe('Garden Index Schema Validation', () => {
   const requiredKeys = getRequiredKeys(GARDEN_ARCHETYPE_PATH);
   const gardens = getGardens();
 
-  // TODO: Raise error for archetype if the requiredKeys is an empty array
+  // Raise error for archetype if the requiredKeys is an empty array
   it('should have a valid archetype schema', () => {
     expect(requiredKeys.length, 
       `No keys found in ${GARDEN_ARCHETYPE_PATH}. Check if the file exists and has valid YAML frontmatter.`
