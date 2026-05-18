@@ -2,7 +2,7 @@
 
 This is a template for implementing reusable, static-first knowledge gardens in a Hugo-based website. It uses a semantic grid system to transform user-input data into interactive visual mindmaps.
 
-For full architecture details, testing criteria, and maintenance practices, please refer to `docs/GARDEN.md`.
+For full architecture details, testing criteria, and maintenance practices, please refer to `docs/GARDEN.md`. I've implemented a live example of a knowledge garden [here](https://tangentialalmond.cc/garden/ml/).
 
 ## Table-of-contents
 - [✅ Requirements](#-requirements)
