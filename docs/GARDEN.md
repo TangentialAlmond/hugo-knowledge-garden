@@ -24,6 +24,7 @@ Example garden:
   - [🎨 Design choices](#-design-choices)
   - [🌠 Asset design](#-asset-design)
   - [🧪 Tests](#-tests)
+  - [📝 Draft mode](#-draft-mode)
 - [👩‍🌾 Managing a garden](#-managing-a-garden)
   - [🪴 Creating a garden](#-creating-a-garden)
   - [🪏 Updating a garden](#-updating-a-garden)
@@ -133,6 +134,9 @@ All tests check for data integrity of the garden.
   - nodes referenced exist
   - conflict in pairs of target and source nodes across `main.yaml` and `detour.yaml` (since a connection cannot be a main course and detour)
 
+## 📝 Draft mode
+When a garden's `index.md` has `draft: true`, the garden will be rendered in draft mode. Draft mode is meant to help the author plan the position of nodes and their connections. In draft mode, the `(col, row)` coordinates of each tile in the grid is shown. These coordinates are not rendered when `draft: false`.
+
 # 👩‍🌾 Managing a garden
 ## 🪴 Creating a garden
 1. Create the relevant directories and files. The `<name-of-garden>` must be in kebab-case.
@@ -168,6 +172,9 @@ All tests check for data integrity of the garden.
      ---
      ```
      The garden field indicates the name of the subdirectory containing the `index.md` and the nodes/connections. The layout field indicates the garden template to use (`layouts/garden/single.html`). These two fields are automatically generated and should NOT be changed typically unless you are planning to change the garden name, etc.
+
+     > **Tip 💡**<br>
+     > You can use draft mode by setting the frontmatter to `draft: true`. See more in [📝 Draft mode](#-draft-mode).
 
 3. To create each node, copy the `node-template.yaml`. The `<new-node-name>` must be in kebab-case.
    ```bash
