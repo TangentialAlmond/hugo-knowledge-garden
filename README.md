@@ -2,9 +2,10 @@
 
 This is a template for implementing reusable, static-first knowledge gardens in a Hugo-based website. It uses a semantic grid system to transform user-input data into interactive visual mindmaps.
 
-For full architecture details, testing criteria, and maintenance practices, please refer to `docs/GARDEN.md`. I've implemented a live example of a knowledge garden [here](https://tangentialalmond.cc/garden/ml/).
+For full architecture details, testing criteria, and maintenance practices, please refer to `docs/GARDEN.md`. I've implemented a live example of a knowledge garden [here](https://tangentialalmond.cc/garden/ml/). I also share about how I use Claude, ChatGPT and Gemini to assist my implementation in this [post](https://tangentialalmond.cc/posts/knowledge-garden/).
 
 ## Table-of-contents
+- [🔮 Preview](#-preview)
 - [✅ Requirements](#-requirements)
 - [🚀 Quick start](#-quick-start)
 - [👩‍🌾 Managing a garden](#-managing-a-garden)
@@ -12,6 +13,16 @@ For full architecture details, testing criteria, and maintenance practices, plea
   - [🪏 Updating a garden](#-updating-a-garden)
   - [🧨 Deleting a garden](#-deleting-a-garden)
 - [🧪 Running tests](#-running-tests)
+
+# 🔮 Preview
+
+Here's an example of the knowledge garden I've implemented on machine learning:
+
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/1ba961cd-0982-432a-aac7-9219598344de" width="80%" muted autoplay loop>
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 # ✅ Requirements
 
